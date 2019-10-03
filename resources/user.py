@@ -1,5 +1,4 @@
 from flask_restful import Resource, reqparse
-from dbconn import Database
 from models.user import UserModel
 
 
@@ -22,10 +21,8 @@ class UserRegister(Resource):
 
         user = UserModel.find_by_username(username)
         if not user:
-            with Database(UserModel.DB_NAME) as connection:
-                cursor = connection.cursor()
-                signup = 'INSERT INTO {} VALUES(NULL, ?, ?)'.format(UserModel.TABLE_NAME)
-                cursor.execute(signup, (username, password))
-                return {'message': 'successfully created'}
-        else:
-            return {'message': 'user already exists'}
+            user = UserModel(username, password)
+            user.add_to_db()
+            return {'message': 'successfully created'}
+
+        return {'message': 'user already exists'}

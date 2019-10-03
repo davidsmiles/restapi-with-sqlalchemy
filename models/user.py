@@ -1,33 +1,25 @@
-from dbconn import Database
+from DB import DB
 
 
-class UserModel:
-    TABLE_NAME = 'users'
-    DB_NAME = 'data.db'
+class UserModel(DB.Model):
 
-    def __init__(self, _id, username, password):
-        self.id = _id
+    __tablename__ = 'users'
+    id = DB.Column(DB.Integer, primary_key=True)
+    username = DB.Column(DB.String(80))
+    password = DB.Column(DB.String(80))
+
+    def __init__(self, username, password):
         self.username = username
         self.password = password
 
     @classmethod
     def find_by_username(cls, username):
-        with Database(cls.DB_NAME) as connection:
-            cursor = connection.cursor()
-            query = 'SELECT * FROM {} WHERE username = ?'.format(cls.TABLE_NAME)
-            result = cursor.execute(query, (username,))
-            user = result.fetchone()
-
-        return cls(*user) if user else None
+        return cls.query.filter_by(username=username).first()
 
     @classmethod
     def find_by_id(cls, user_id):
-        with Database(cls.DB_NAME) as connection:
-            cursor = connection.cursor()
-            query = 'SELECT * FROM {} WHERE id = ?'.format(cls.TABLE_NAME)
-            result = cursor.execute(query, (user_id,))
-            user = result.fetchone()
+        return cls.query.filter_by(id=user_id).first()
 
-        return cls(*user) if user else None
-
-
+    def add_to_db(self):
+        DB.session.add(self)
+        DB.session.commit()
