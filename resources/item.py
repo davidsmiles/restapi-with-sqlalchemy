@@ -11,6 +11,11 @@ class Item(Resource):
                         required=True,
                         help='This field cannot be left blank')
 
+    parser.add_argument('store_id',
+                        type=int,
+                        required=True,
+                        help='Every item needs a store_id')
+
     def get(self, name):
         item = ItemModel.find_by_name(name)
         return {'item': item}, 200 if item else 404
@@ -22,9 +27,10 @@ class Item(Resource):
             return error_msg, 400
 
         data = Item.parser.parse_args()
-        price = data['price']
+        # price = data['price']
+        # store_id = data['store_id']
 
-        item = ItemModel(name, price)
+        item = ItemModel(name, **data)
         try:
             item.upsert()
             return item.json()
@@ -41,10 +47,11 @@ class Item(Resource):
     def put(self, name):
         data = Item.parser.parse_args()
         price = data['price']
+        # store_id = data['store_id']
 
         item = ItemModel.find_by_name(name)
         if not item:                            # if dont exists, then add
-            item = ItemModel(name, price)
+            item = ItemModel(name, **data)
         else:
             item.price = price                  # else update data
 

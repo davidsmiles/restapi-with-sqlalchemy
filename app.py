@@ -7,6 +7,7 @@ from datetime import timedelta
 
 from resources.user import UserRegister
 from resources.item import *
+from resources.store import *
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -32,7 +33,9 @@ def customized_response_handler(access_token, identity):
     })
 
 
+api.add_resource(Store, '/store/<string:name>')
 api.add_resource(ItemList, '/items')
+api.add_resource(StoreList, '/stores')
 api.add_resource(Item, '/item/<string:name>')
 api.add_resource(UserRegister, '/signup')
 
