@@ -18,7 +18,7 @@ class Item(Resource):
 
     def get(self, name):
         item = ItemModel.find_by_name(name)
-        return {'item': item}, 200 if item else 404
+        return {'item': item.json() if item else None}, 200 if item else 404
 
     def post(self, name):
         item = ItemModel.find_by_name(name)
