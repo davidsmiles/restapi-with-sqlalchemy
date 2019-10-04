@@ -24,5 +24,5 @@ class StoreModel(DB.Model):
         DB.session.commit()
 
     def delete(self):
-        DB.session.remove(self)
+        DB.session.delete(self)
         DB.session.commit()
