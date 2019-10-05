@@ -21,7 +21,7 @@ class UserRegister(Resource):
 
         user = UserModel.find_by_username(username)
         if not user:
-            user = UserModel(username, password)
+            user = UserModel(**data)
             user.add_to_db()
             return {'message': 'successfully created'}
 
