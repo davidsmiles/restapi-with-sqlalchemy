@@ -21,10 +21,6 @@ app.config['JWT_EXPIRATION_DELTA'] = timedelta(seconds=1800)
 app.config['JWT_AUTH_USERNAME_KEY'] = 'username'
 
 
-@app.before_first_request
-def create_table():
-    DB.create_all()
-
 @jwt.auth_request_handler
 def customized_response_handler(access_token, identity):
     return jsonify({
