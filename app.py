@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt import JWT
@@ -11,7 +13,9 @@ from resources.item import *
 from resources.store import *
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+basedir = os.path.abspath(os.path.dirname(__file__))
+db_uri = 'sqlite:///' + os.path.join(basedir, 'data.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'david'
 api = Api(app)
@@ -21,6 +25,11 @@ jwt = JWT(app, authenticate, identity)
 app.config['JWT_EXPIRATION_DELTA'] = timedelta(seconds=1800)
 app.config['JWT_AUTH_USERNAME_KEY'] = 'username'
 
+
+@app.before_first_request
+def create_table():
+    print('db created')
+    DB.create_all()
 
 
 api.add_resource(Index, '/')
