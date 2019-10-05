@@ -5,6 +5,7 @@ from security import authenticate, identity
 
 from datetime import timedelta
 
+from resources.index import Index
 from resources.user import UserRegister
 from resources.item import *
 from resources.store import *
@@ -29,6 +30,7 @@ def customized_response_handler(access_token, identity):
     })
 
 
+api.add_resource(Index, '/')
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(ItemList, '/items')
 api.add_resource(StoreList, '/stores')
