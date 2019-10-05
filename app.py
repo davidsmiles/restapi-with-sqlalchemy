@@ -39,6 +39,7 @@ api.add_resource(StoreList, '/stores')
 api.add_resource(Item, '/item/<string:name>')
 api.add_resource(UserRegister, '/signup')
 
+
 if __name__ == '__main__':
     from DB import DB
     DB.init_app(app)
