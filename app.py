@@ -22,14 +22,6 @@ app.config['JWT_EXPIRATION_DELTA'] = timedelta(seconds=1800)
 app.config['JWT_AUTH_USERNAME_KEY'] = 'username'
 
 
-@jwt.auth_request_handler
-def customized_response_handler(access_token, identity):
-    return jsonify({
-        'token': access_token.decode('utf-8'),
-        'userid': identity.id
-    })
-
-
 api.add_resource(Index, '/')
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(ItemList, '/items')
