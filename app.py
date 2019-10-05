@@ -22,6 +22,12 @@ app.config['JWT_EXPIRATION_DELTA'] = timedelta(seconds=1800)
 app.config['JWT_AUTH_USERNAME_KEY'] = 'username'
 
 
+@app.before_first_request
+def create_table():
+    print('db created')
+    DB.create_all()
+
+
 api.add_resource(Index, '/')
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(ItemList, '/items')
