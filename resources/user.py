@@ -26,3 +26,26 @@ class UserRegister(Resource):
             return {'message': 'successfully created'}
 
         return {'message': 'user already exists'}
+
+
+class User(Resource):
+    @classmethod
+    def get(cls, username):
+        user = UserModel.find_by_username(username)
+        if not user:
+            return {'message': 'user not found.'}, 404
+        return user.json()
+
+    @classmethod
+    def delete(cls, username):
+        user = UserModel.find_by_username(username)
+        if not user:
+            return {'message': 'user not found.'}, 404
+
+        user.delete()
+        return {'message': 'user has been deleted'}
+
+
+class UsersList(Resource):
+    def get(self):
+        return [user.json() for user in UserModel.find_all()]

@@ -64,7 +64,7 @@ class ItemList(Resource):
 
     @jwt_required()
     def get(self):
-        items = ItemModel.query.all()
+        items = ItemModel.find_all()
         items = [item.json() for item in items]
 
         response = {'items': items}

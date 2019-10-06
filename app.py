@@ -8,11 +8,12 @@ from security import authenticate, identity
 from datetime import timedelta
 
 from resources.index import Index
-from resources.user import UserRegister
+from resources.user import *
 from resources.item import *
 from resources.store import *
 
 app = Flask(__name__)
+app.config['PROPAGATE_EXCEPTIONS'] = True
 db_uri = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -29,7 +30,9 @@ api.add_resource(Store, '/store/<string:name>')
 api.add_resource(ItemList, '/items')
 api.add_resource(StoreList, '/stores')
 api.add_resource(Item, '/item/<string:name>')
+api.add_resource(User, '/user/<string:username>')
 api.add_resource(UserRegister, '/signup')
+api.add_resource(UsersList, '/users')
 
 
 if __name__ == '__main__':
