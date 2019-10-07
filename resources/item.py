@@ -11,7 +11,7 @@ class Item(Resource):
                         required=True,
                         help='This field cannot be left blank')
 
-    parser.add_argument('store_name',
+    parser.add_argument('store_id',
                         type=int,
                         required=True,
                         help='Every item needs a store_id')
@@ -28,7 +28,7 @@ class Item(Resource):
 
         data = Item.parser.parse_args()
         # price = data['price']
-        # store_id = data['store_name']
+        # store_id = data['store_id']
 
         item = ItemModel(name, **data)
         try:
@@ -47,7 +47,7 @@ class Item(Resource):
     def put(self, name):
         data = Item.parser.parse_args()
         price = data['price']
-        # store_id = data['store_name']
+        # store_id = data['store_id']
 
         item = ItemModel.find_by_name(name)
         if not item:                            # if dont exists, then add
@@ -69,7 +69,3 @@ class ItemList(Resource):
 
         response = {'items': items}
         return response, 200
-
-    def delete(self):
-        ItemModel.delete_all()
-        return {'message': 'all deleted'}
