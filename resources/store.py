@@ -36,7 +36,3 @@ class StoreList(Resource):
         return {
             'stores': [store.json() for store in StoreModel.find_all()]
         }
-
-    def delete(self):
-        StoreModel.delete_all()
-        return {'message': 'all deleted'}

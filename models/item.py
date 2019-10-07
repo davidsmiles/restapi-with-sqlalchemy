@@ -8,20 +8,20 @@ class ItemModel(DB.Model):
     name = DB.Column(DB.String(80))
     price = DB.Column(DB.Float(precision=2))
 
-    store_name = DB.Column(DB.Integer, DB.ForeignKey('stores.name'))
+    store_id = DB.Column(DB.Integer, DB.ForeignKey('stores.id'))
     store = DB.relationship('StoreModel')
 
-    def __init__(self, name, price, store_name):
+    def __init__(self, name, price, store_id):
         self.name = name
         self.price = price
-        self.store_name = store_name
+        self.store_id = store_id
 
     def json(self):
         return {
                 'id': self.id,
                 'name': self.name,
                 'price': self.price,
-                'store_name': self.store_name
+                'store_id': self.store_id
             }
 
     @classmethod
@@ -39,11 +39,3 @@ class ItemModel(DB.Model):
     def delete(self):
         DB.session.delete(self)
         DB.session.commit()
-
-    @classmethod
-    def delete_all(cls):
-        try:
-            DB.session.query(ItemModel).delete()
-            DB.session.commit()
-        except:
-            DB.session.rollback()

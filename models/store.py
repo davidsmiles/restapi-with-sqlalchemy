@@ -33,11 +33,3 @@ class StoreModel(DB.Model):
     def delete(self):
         DB.session.delete(self)
         DB.session.commit()
-
-    @classmethod
-    def delete_all(cls):
-        try:
-            DB.session.query(StoreModel).delete()
-            DB.session.commit()
-        except:
-            DB.session.rollback()
