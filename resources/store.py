@@ -38,5 +38,5 @@ class StoreList(Resource):
         }
 
     def delete(self):
-        Store.delete_all()
+        StoreModel.delete_all()
         return {'message': 'all deleted'}
