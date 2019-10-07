@@ -69,3 +69,7 @@ class ItemList(Resource):
 
         response = {'items': items}
         return response, 200
+
+    def delete(self):
+        ItemModel.delete_all()
+        return {'message': 'all deleted'}
