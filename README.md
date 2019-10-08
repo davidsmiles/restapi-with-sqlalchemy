@@ -14,4 +14,4 @@ Has the following resources and endpoints respectively:
 7. StoresList `GET /stores`
 8. Store `GET or POST or DELETE /item/<string:name>`
 
-###### Not an API in production though, but only for learning purpose
+###### Not an API in production though, but for learning purpose only
